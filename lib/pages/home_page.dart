@@ -107,14 +107,13 @@ class _HomePageState extends State<HomePage> {
              height: 50,
              shape: StadiumBorder(),
              color: Theme.of(context).primaryColor,
-             child: Text(
-               'Submit Information',
-               style: TextStyle(color: Colors.white, fontSize: 20),
+             child: Center(
+               child: Text(
+                 'Submit Information',
+                 style: TextStyle(color: Colors.white, fontSize: 20),
+               ),
              ),
-
-
            )
-
          ],
        )
      );
