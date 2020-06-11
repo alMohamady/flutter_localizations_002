@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterlacalization002/models/language.dart';
 import 'package:flutterlacalization002/routs/route_names.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,12 +17,46 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       drawer: _drawerList(),
       appBar: AppBar(
-        title: Text('Home Page'),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(20),
-        child: _mainForm(context)
-      ),
+          title: Text('Home Page'),
+          actions: <Widget>[
+      Padding(
+      padding: EdgeInsets.all(8),
+      child: DropdownButton(
+          underline: SizedBox(),
+          icon: Icon(
+            Icons.language,
+            color: Colors.white,
+          ),
+          items: Language.languageList()
+              .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(
+            value: lang,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text(
+                    lang.flag,
+                    style: TextStyle(fontSize: 20),
+                ),
+                Text(lang.name)
+              ],
+            ),
+          )
+      ).toList(),
+        onChanged: (Language lang) {
+            _changeLanguage(lang);
+        },
+    ),
+    )
+    ],
+    ),
+    body: Container(
+    padding: EdgeInsets.all(20),
+    child: _mainForm
+    (
+    context
+    )
+    )
+    ,
     );
   }
 
@@ -173,5 +208,9 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  void _changeLanguage(Language lang) {
+    print (lang.languageCode);
   }
 }
