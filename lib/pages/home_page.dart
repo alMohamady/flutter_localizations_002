@@ -17,46 +17,48 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       drawer: _drawerList(),
       appBar: AppBar(
-          title: Text('Home Page'),
-          actions: <Widget>[
-      Padding(
-      padding: EdgeInsets.all(8),
-      child: DropdownButton(
-          underline: SizedBox(),
-          icon: Icon(
-            Icons.language,
-            color: Colors.white,
-          ),
-          items: Language.languageList()
-              .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(
-            value: lang,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                    lang.flag,
-                    style: TextStyle(fontSize: 20),
-                ),
-                Text(lang.name)
-              ],
+        title: Text('Home Page'),
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(8),
+            child: DropdownButton(
+              underline: SizedBox(),
+              icon: Icon(
+                Icons.language,
+                color: Colors.white,
+              ),
+              items: Language.languageList()
+                  .map<DropdownMenuItem<Language>>((lang) =>
+                  DropdownMenuItem(
+                    value: lang,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Text(
+                          lang.flag,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        Text(lang.name)
+                      ],
+                    ),
+                  )
+              ).toList(),
+              onChanged: (Language lang) {
+                _changeLanguage(lang);
+              },
             ),
           )
-      ).toList(),
-        onChanged: (Language lang) {
-            _changeLanguage(lang);
-        },
-    ),
-    )
-    ],
-    ),
-    body: Container(
-    padding: EdgeInsets.all(20),
-    child: _mainForm
-    (
-    context
-    )
-    )
-    ,
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+            padding: EdgeInsets.all(20),
+            child: _mainForm
+              (
+                context
+            )
+        ),
+      ),
     );
   }
 
