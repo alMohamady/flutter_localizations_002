@@ -6,5 +6,10 @@
   "date": "Date",
   "submit_info": "Submit Info",
   "about_us": "About Us",
-  "settings": "Settings"
+  "settings": "Settings",
+  "name_hint": "Enter the Name",
+  "email_hint": "Enter the Email",
+  "required_field": "Required Field",
+  "change_language": "Change Language",
+  "about": "Learn Text here for this demo"
 }
