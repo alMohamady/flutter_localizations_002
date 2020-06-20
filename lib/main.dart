@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutterlacalization002/localization/localization_methods.dart';
 import 'package:flutterlacalization002/localization/set_localization.dart';
 import 'package:flutterlacalization002/routs/custom_route.dart';
 import 'package:flutterlacalization002/routs/route_names.dart';
+import 'package:intl/intl.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +16,13 @@ class MyApp extends StatefulWidget {
   }
 
   @override
-  _MyAppState createState() => _MyAppState();
+  _MyAppState createState() {
+
+    var f = new NumberFormat("###,###", "en_US");
+    print(f.format(245315));
+
+    return _MyAppState();
+  }
 }
 
 class _MyAppState extends State<MyApp> {
@@ -28,35 +36,54 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
+  void didChangeDependencies() {
+    getLocale().then((locale) {
+      setState(() {
+        this._local = locale;
+      });
+    });
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      onGenerateRoute: CustomRoute.allRoutes,
-      initialRoute: homeRoute,
-      locale: _local,
-      supportedLocales: [
-        Locale('en', 'US'),
-        Locale('ar', 'EG')
-      ],
-      localizationsDelegates: [
-        SetLocalization.localizationsDelegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      localeResolutionCallback: (deviceLocal, supportedLocales) {
-        for(var local in supportedLocales) {
-          if(local.languageCode == deviceLocal.languageCode && local.countryCode == deviceLocal.countryCode) {
-            return deviceLocal;
+    if (_local == null) {
+      return Container(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else {
+      return MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        onGenerateRoute: CustomRoute.allRoutes,
+        initialRoute: homeRoute,
+        locale: _local,
+        supportedLocales: [
+          Locale('en', 'US'),
+          Locale('ar', 'EG')
+        ],
+        localizationsDelegates: [
+          SetLocalization.localizationsDelegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        localeResolutionCallback: (deviceLocal, supportedLocales) {
+          for (var local in supportedLocales) {
+            if (local.languageCode == deviceLocal.languageCode &&
+                local.countryCode == deviceLocal.countryCode) {
+              return deviceLocal;
+            }
           }
-        }
-        return supportedLocales.first;
-      },
-    );
+          return supportedLocales.first;
+        },
+      );
+    }
   }
 }
 

@@ -225,19 +225,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _changeLanguage(Language lang) {
-    Locale _temp;
-    switch (lang.languageCode) {
-      case 'en':
-        _temp = Locale(lang.languageCode, 'US');
-        break;
-      case 'ar':
-        _temp = Locale(lang.languageCode, 'EG');
-        break;
-      default:
-        _temp = Locale('en', 'US');
-        break;
-    }
+  void _changeLanguage(Language lang) async {
+    Locale _temp = await setLocale(lang.languageCode);
     MyApp.setLocale(context, _temp);
   }
 }
